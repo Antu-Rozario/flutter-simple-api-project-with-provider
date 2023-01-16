@@ -1,3 +1,5 @@
+import 'package:api_project/providers/transactionProvider.dart';
+import 'package:api_project/screens/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:api_project/providers/authProvider.dart';
 import 'package:api_project/providers/categoryProvider.dart';
@@ -18,6 +20,9 @@ class MyApp extends StatelessWidget {
         builder: (context, authProvider, child) {
           return MultiProvider(
             providers: [
+
+              ChangeNotifierProvider<TransactionProvider>(
+                  create: (context) => TransactionProvider(authProvider)),
               ChangeNotifierProvider<CategoryProvider>(
                   create: (context) => CategoryProvider(authProvider)),
             ],
@@ -27,8 +32,8 @@ class MyApp extends StatelessWidget {
                 '/': (context) {
                   final authProvider = Provider.of<AuthProvider>(context);
                   if (authProvider.isAuthenticated) {
-                    Provider.of<CategoryProvider>(context, listen: false)
-                        .init();
+                    Provider.of<CategoryProvider>(context, listen: false).init();
+                    Provider.of<TransactionProvider>(context, listen: false).init();
                     return Home();
                   } else {
                     return Login();
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
                 },
                 '/login': (context) => Login(),
                 '/register': (context) => Register(),
-                '/home': (context) => Home(),
+                '/home': (context) => Transactions(),
                 '/categories': (context) => Categories(),
               },
             ),

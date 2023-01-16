@@ -1,5 +1,6 @@
 import 'package:api_project/providers/authProvider.dart';
 import 'package:api_project/providers/categoryProvider.dart';
+import 'package:api_project/providers/transactionProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:api_project/screens/categories.dart';
 import 'package:api_project/screens/transactions.dart';
@@ -49,6 +50,7 @@ class _HomeState extends State<Home> {
     if (index == 2) {
       final AuthProvider provider =
       Provider.of<AuthProvider>(context, listen: false);
+      Provider.of<TransactionProvider>(context, listen: false).clear();
       Provider.of<CategoryProvider>(context, listen: false).clear();
       await provider.logOut();
     } else {
